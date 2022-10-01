@@ -5,19 +5,29 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Welcome, {{ username }}!</h1>
-    <h2>Let's plan your next sustainable school trip!</h2>
+    <div class="webpage-heading">
+        <h1>Welcome, {{ username }}!</h1>
+        <h2>Let's plan a sustainable school trip for you. </h2>
+    </div>
 
     <form action="/search" method="post">
         <div class="form-group">
             <p>First, input your travel dates! Maybe the start and end of a school break?</p>
-            <input autocomplete="off" autofocus class="form-control" name="start_date" placeholder="Start Date" type="date">
-            <input autocomplete="off" autofocus class="form-control" name="end_date" placeholder="End Date" type="date">
-            <label for="flexible"> My dates are flexible: </label><br>
-            <input autocomplete="off" autofocus class="form-control" id="flexible" name="flexible" type="checkbox">
+
+            <div>
+                <input autocomplete="off" autofocus class="form-control" name="start_date" id="start_date" type="date">
+                <input autocomplete="off" autofocus class="form-control" name="end_date" id="end_date" type="date">
+                <label>
+                    <input autocomplete="off" autofocus class="form-control" id="flexible" name="flexible" type="checkbox"/>
+                    My dates are flexible
+                </label>
+            </div>
             
+           
         </div>
         <div class="form-group">
+
+            <p>Now tell us where your closest airport is located!</p>
             <input class="form-control" name="src" placeholder="Source (Airport Code)" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Let's Go!</button>

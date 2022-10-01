@@ -32,5 +32,31 @@ main
     overflow-x: auto;
 
     /* Center contents */
-    text-align: center;
+    /* text-align: center;*/
+   
+}
+
+main .webpage-heading
+{
+  text-align: center;
+  padding: "50px";
+}
+
+#start_date
+{
+  display: in-line;
+
+}
+
+#end_date
+{
+  display: in-line;
+  
+}
+
+#flexible
+{
+  vertical-align: bottom;
+  position: relative;
+  top: 5px;
 }
