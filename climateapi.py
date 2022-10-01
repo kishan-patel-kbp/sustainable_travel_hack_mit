@@ -9,22 +9,22 @@ climate_headers = {
 departure_airport = 'JFK'
 arrival_airport = 'SFO'
 
-climate_data = {
+def get_carbon_emission(origin, destination):
+    climate_data = {
         "legs": [
             {
-                "from": arrival_airport,
-                "to": departure_airport,
+                "from": origin,
+                "to": destination,
                 "passengers": 2,
                 "class": "economy"
             },
             {
-                "from": departure_airport,
-                "to": arrival_airport,
+                "from": destination,
+                "to": origin,
                 "passengers": 2,
                 "class": "economy"
             }
         ]
     }
-
-response = requests.post(url=climate_url, headers=climate_headers, json=climate_data)
-print(response.json().get("co2e"))
+    response = requests.post(url=climate_url, headers=climate_headers, json=climate_data)
+    return(response.json().get("co2e"))
