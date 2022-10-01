@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-origin_iata = "PDX"
+origin_iata = "BOS"
 period = "2022-10-13"
 direct = "true"
 one_way = "false"
