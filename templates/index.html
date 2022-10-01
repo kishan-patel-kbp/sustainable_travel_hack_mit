@@ -1,8 +1,10 @@
-<html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h1>Hello {{ username }}</h1>
-    </body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome, {{ username }}!</h1>
+    <h2>Let's plan your next sustainable school trip!</h2>
+{% endblock %}
