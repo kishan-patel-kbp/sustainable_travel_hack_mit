@@ -7,4 +7,20 @@
 {% block main %}
     <h1>Welcome, {{ username }}!</h1>
     <h2>Let's plan your next sustainable school trip!</h2>
+
+    <form action="/search" method="post">
+        <div class="form-group">
+            <p>First, input your travel dates! Maybe the start and end of a school break?</p>
+            <input autocomplete="off" autofocus class="form-control" name="start_date" placeholder="Start Date" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="end_date" placeholder="End Date" type="text">
+            <label for="flexible"> My dates are flexible: </label><br>
+            <input autocomplete="off" autofocus class="form-control" id="flexible" name="flexible" type="checkbox">
+            
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="src" placeholder="Source (Airport Code)" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Let's Go!</button>
+    </form>
+
 {% endblock %}
