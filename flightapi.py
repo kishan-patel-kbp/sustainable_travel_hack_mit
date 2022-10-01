@@ -1,37 +1,39 @@
 import requests
 
-API_KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiYmZkZGJhZTgwYjY3Y2MwMDM4NDZhYTFiYTYwMGU0NTExNDNiYWI0OGIxZjc1YzU4NDcyYTgxMTQ0YWVjZDA1MWRlNGJmYjE3ZGE2Yzk3MGIiLCJpYXQiOjE2NjQ2NDQ3NDQsIm5iZiI6MTY2NDY0NDc0NCwiZXhwIjoxNjk2MTgwNzQ0LCJzdWIiOiIxNDAzNCIsInNjb3BlcyI6W119.aSjVK0Q3SQ01ExN3WVxtXD5_LTR95zrWk-_rVuGhrAaU7CuhlnlWovTvWSh5URa4SHLeL4LN5nIqUhj3ZMcYoA"
+origin_iata = "PDX"
+period = "2022-10-13"
+direct = "true"
+one_way = "false"
+visa = "false"
+locale = "en" #search language
+min_trip_duration_in_days = '5'
+max_trip_duration_in_days = '10'
 
-adults = 1
+url = "http://map.aviasales.com/prices.json/?origin_iata="+origin_iata+"&period="+period+":season&direct="+direct+"&one_way="+one_way+"&schengen="+visa+"&locale="+locale+"&min_trip_duration_in_days="+min_trip_duration_in_days+"&max_trip_duration_in_days="+max_trip_duration_in_days
 
-departure_airport = 'PDX'
+querystring = {"origin_iata": origin_iata,
+	"period" : period, 
+	"direct": direct,
+	"one_way": one_way,
+	"visa": visa,
+	"locale": locale,
+	"min_trip_duration_in_days": min_trip_duration_in_days,
+	"max_trip_duration_in_days": max_trip_duration_in_days
+}
 
-arrival_airport = 'EWR'
-
-departure_date = '2022-10-16'
-
-api_url = ("https://app.goflightlabs.com/search-all-flights?access_key=" + API_KEY + "&adults=1&origin=MAD&destination=FCO&departureDate=2022-10-06")
-
-
-
-response = requests.get(api_url)
-
-# print(response.text[0])
-data = response.json().get("data")
-pricing_options = data["results"][1].get("pricing_options")
-legs = data["results"][1].get("legs")
-
-print("Origin", legs[0].get("origin"))
-print("Destination", legs[0].get("destination"))
-
-
-
-for idx in range(len(pricing_options) - 2):
-    print(pricing_options[idx].get("price"))
-    # print("Duration of Flight", legs[idx].get("durationInMinutes"))
-
-# print(f'Total users: {response.json().get("data")}')
+headers = {
+	"X-Access-Token": "d752dc1bff39edfd08ce3ebef7e94f3d",
+	"X-RapidAPI-Key": "2d3e34d72fmsha4c94eecaa8b6b5p1ea822jsnd0846372075f",
+	"X-RapidAPI-Host": "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com"
+}
 
 
-# response = requests.get("https://api.open-notify.org/astros.json")
-# print(response.status_code)
+
+response = requests.request("GET", url, headers=headers)
+data = response.json()
+
+for idx in range(len(data)):
+	print("value", data[idx].get("value"), "departure", data[idx].get("destination"))
+
+print(data[0].get("value"))
+print(data[0])
