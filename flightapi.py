@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 origin_iata = "PDX"
 period = "2022-10-13"
@@ -6,7 +7,7 @@ direct = "true"
 one_way = "false"
 visa = "false"
 locale = "en" #search language
-min_trip_duration_in_days = '5'
+min_trip_duration_in_days = '4'
 max_trip_duration_in_days = '10'
 
 url = "http://map.aviasales.com/prices.json/?origin_iata="+origin_iata+"&period="+period+":season&direct="+direct+"&one_way="+one_way+"&schengen="+visa+"&locale="+locale+"&min_trip_duration_in_days="+min_trip_duration_in_days+"&max_trip_duration_in_days="+max_trip_duration_in_days
@@ -28,12 +29,8 @@ headers = {
 }
 
 
-
-response = requests.request("GET", url, headers=headers)
-data = response.json()
-
-for idx in range(len(data)):
-	print("value", data[idx].get("value"), "departure", data[idx].get("destination"))
-
-print(data[0].get("value"))
-print(data[0])
+def create_pd_df():
+	response = requests.get(url, headers = headers)
+	data = pd.DataFrame(response.json())[['value','ttl','trip_class','return_date','origin','number_of_changes','distance', 'destination', 'depart_date', 'airline']]
+	print(data.info())
+	return data
