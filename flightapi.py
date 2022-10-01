@@ -32,5 +32,4 @@ headers = {
 def create_pd_df():
 	response = requests.get(url, headers = headers)
 	data = pd.DataFrame(response.json())[['value','ttl','trip_class','return_date','origin','number_of_changes','distance', 'destination', 'depart_date', 'airline']]
-	print(data.info())
 	return data
