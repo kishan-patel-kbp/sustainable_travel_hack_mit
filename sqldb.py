@@ -47,7 +47,7 @@ def delete_repeats():
     conn.close()
     
 def get_origin_destination():
-    conn = sqlite3.connect("flights.db")
+    conn = sqlite3.connect("flights_with_emissions.db")
     with closing(conn.cursor()) as cur:
         cur.execute("SELECT origin, destination FROM Flight_Data")
         return cur.fetchall()
