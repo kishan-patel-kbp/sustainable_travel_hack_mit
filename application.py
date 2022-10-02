@@ -76,7 +76,7 @@ def search():
     data = sqldb.add_carbon_emissions(data)
     sqldb.create_table(data)
 
+
     flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
     print(flights)
     return render_template('flights.html', flights = flights)
-
