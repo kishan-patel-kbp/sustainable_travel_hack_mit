@@ -48,6 +48,7 @@ main .text
 {
   text-align: center;
   padding: "50px";
+  align-items: center;
 }
 
 #start_date
