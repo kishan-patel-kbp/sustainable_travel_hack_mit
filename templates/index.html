@@ -12,7 +12,7 @@
 
     <form action="/search" method="post">
         <div class="form-group">
-            <p>First, input your travel dates! Maybe the start and end of a school break?</p>
+            <p>First, input your travel dates! <i> Maybe the start and end of a school break?</i></p>
 
             <div>
                 <input autocomplete="off" autofocus class="form-control" name="start_date" id="start_date" type="date">
@@ -28,7 +28,7 @@
         <div class="form-group">
 
             <p>Now tell us where your closest airport is located!</p>
-            <input class="form-control" name="src" placeholder="Source (Airport Code)" type="text">
+            <input name="src" class="airport_box" placeholder="Start Airport Code (ex: ATL)" type="text">
         </div>
         <button class="btn btn-primary" type="submit">Let's Go!</button>
     </form>

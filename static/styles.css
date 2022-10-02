@@ -60,3 +60,7 @@ main .webpage-heading
   position: relative;
   top: 5px;
 }
+
+.airport_box {
+  width: 30%;
+}
