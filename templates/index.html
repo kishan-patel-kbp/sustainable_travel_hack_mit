@@ -5,9 +5,14 @@
 {% endblock %}
 
 {% block main %}
-    <div class="webpage-heading">
+    <div class="webpage-heading padding-bottom-lg">
         <h1>Welcome, {{ username }}!</h1>
-        <h2>Let's plan a sustainable school trip for you. </h2>
+        <h3>Let's plan a sustainable school trip for you. </h3>
+        <p style="text-align:left;">You can go anywhere, see anything -- the sky's the limit when you Fly Low! Just let our algorithm find a sustainable trip for you, 
+            perfect for your budget, dates, school location, and minimal environmental impact! Here's to planning the perfect spring break trip or holiday getaway 
+            without breaking the bank or having a disproportionate impact on the environment. No need to search through multiple sites or
+            calculate the green impact -- we'll do it all for you!
+        </p>
     </div>
 
     <form action="/search" method="post">
