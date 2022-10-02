@@ -63,15 +63,48 @@ def add_carbon_emissions(data):
             carbon_emission = 0
         data["carbon_emissions"][count] = carbon_emission
         count += 1
-    print(data)
+    return data
 
 def create_table(data):
     """
     write code here
     data is a pandas dataframe
     """
-    pass
+    conn = sqlite3.connect("flights_with_emissions.db")
+    cur = conn.cursor()
+    sql_query = """
+        CREATE TABLE IF NOT EXISTS "Flight_Data" (
+        "index" INTEGER PRIMARY KEY AUTOINCREMENT, 
+        value FLOAT, 
+        ttl BIGINT, 
+        trip_class BIGINT, 
+        return_date TEXT, 
+        origin TEXT, 
+        number_of_changes FLOAT, 
+        distance BIGINT, 
+        destination TEXT, 
+        depart_date TEXT, 
+        airline TEXT,
+        carbon_emissions FLOAT
+);
 
+    """
+    cur.execute(sql_query)
+
+    
+    for index, row in data.iterrows():
+        #print(row['ttl'], row['value'], row['carbon_emissions'])
+        if row['carbon_emissions'] != 0:
+            sql_query = """
+            INSERT INTO Flight_Data (value, ttl, trip_class, return_date, origin, number_of_changes, distance, destination, depart_date, airline, carbon_emissions)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            """
+
+            cur.execute(sql_query, tuple([row['value'], row['ttl'], row['trip_class'], row['return_date'], row['origin'], row['number_of_changes'], row['distance'], row['destination'], row['depart_date'], row['airline'], row['carbon_emissions']]))
+            
+    # TEST
+    test_data = cur.execute("SELECT * FROM Flight_Data")
+    print(test_data)
 data = create_sql_db()
 data = add_carbon_emissions(data)
 create_table(data)
