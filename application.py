@@ -84,3 +84,9 @@ def search():
 def destinations():
     sentence = "There are a variety of sustainable travel solutions just minutes away, just fill out the form now"
     return render_template('destinations.html', sentence = sentence)
+
+@app.route("/methodology")
+def methodology():
+    sentence = "To implement FlyLow we used the Flight Labs API to find flights from our origin to possible destinations. We extract the cost for flights and then pass the flight information to the Climatiq API to retrieve carbon emission information. We populate these results in a SQL database and then retrieve flights based on the users origin and dates entered."
+    return render_template('methodology.html', sentence = sentence)
+
