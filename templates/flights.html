@@ -12,7 +12,9 @@
             <th scope="col">Destination</th>
             <th scope="col">Price</th>
             <th scope="col">Airline</th>
-            <th scope="col">Carbon Emissions</th>
+            <th scope="col">Depart Date</th>
+            <th scope="col">Return Date</th>
+            <th scope="col">Carbon Emissions (in metric tons)</th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +24,8 @@
                 <td>{{flight["destination"]}}</td>
                 <td>{{flight["value"]}}</td>
                 <td>{{flight["airline"]}}</td>
+                <td>{{flight["depart_date"]}}</td>
+                <td>{{flight["return_date"]}}</td>
                 <td>{{flight["carbon_emissions"]}}</td>
             </tr>
         {% endfor %}

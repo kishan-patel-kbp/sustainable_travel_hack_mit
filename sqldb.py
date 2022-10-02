@@ -47,7 +47,7 @@ def delete_repeats():
     conn.close()
     
 def get_origin_destination():
-    conn = sqlite3.connect("flights_with_emissions.db")
+    conn = sqlite3.connect("flights.db")
     with closing(conn.cursor()) as cur:
         cur.execute("SELECT origin, destination FROM Flight_Data")
         return cur.fetchall()
@@ -78,7 +78,7 @@ def create_table(data):
         sql_query = """
             CREATE TABLE IF NOT EXISTS "Flight_Data" (
             "index" INTEGER PRIMARY KEY AUTOINCREMENT, 
-            value FLOAT, 
+            value TEXT, 
             ttl BIGINT, 
             trip_class BIGINT, 
             return_date TEXT, 
@@ -97,14 +97,16 @@ def create_table(data):
         for index, row in data.iterrows():
             #print(row['ttl'], row['value'], row['carbon_emissions'])
             if row['carbon_emissions'] != 0:
+                cost_in_dollars = int(row['value']) / 100
+                cost_str = "$" + str(cost_in_dollars)
                 sql_query = """
                 INSERT INTO Flight_Data (value, ttl, trip_class, return_date, origin, number_of_changes, distance, destination, depart_date, airline, carbon_emissions)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                 """
 
-                cur.execute(sql_query, tuple([row['value'], row['ttl'], row['trip_class'], row['return_date'], row['origin'], row['number_of_changes'], row['distance'], row['destination'], row['depart_date'], row['airline'], row['carbon_emissions']]))
+                cur.execute(sql_query, tuple([cost_str, row['ttl'], row['trip_class'], row['return_date'], row['origin'], row['number_of_changes'], row['distance'], row['destination'], row['depart_date'], row['airline'], row['carbon_emissions']]))
                 
         # TEST
-        cur.execute("SELECT * FROM Flight_Data")
+       
         conn.commit()
 
