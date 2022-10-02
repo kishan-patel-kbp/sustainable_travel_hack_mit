@@ -4,9 +4,9 @@ from flask_session import Session
 app = Flask(__name__)
 import sqlite3
 from collections import defaultdict
-import mysql.connector
 from cs50 import SQL
-
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 import flightapi
 import sqldb
 
@@ -18,6 +18,11 @@ def index():
     name = 'Kishan Bob'
     return render_template('index.html', title='Fly Low', username=name)
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+    
+
 Session(app)
 
 if __name__ == '__main__':
@@ -25,8 +30,8 @@ if __name__ == '__main__':
 
 db = SQL("sqlite:///flights_with_emissions.db")
 
-@app.route("/search", methods=["GET", "POST"])
-def search():
+@app.route('/loading', methods=["GET", "POST"])
+def loading():
     if request.method == "POST":
         # Ensure start date was submitted
         if not request.form.get("start_date"):
@@ -45,13 +50,36 @@ def search():
         end_date = request.form.get("end_date")
         origin = request.form.get("src")
 
-        data = sqldb.create_sql_db(start_date, origin)
-        data = sqldb.add_carbon_emissions(data)
-        sqldb.create_table(data)
+        # Validate start date before end date
+        if start_date > end_date:
+            return "RIP"
 
-        flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
-        print(flights)
-        return render_template('flights.html', flights = flights)
+        # Validate length of origin
+        if len(origin) != 3:
+            return "RIP"
+        
+        return render_template('loading.html', start = start_date, end = end_date, origin = origin)
+
+    else:
+        return "RIP"
+
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    
+    #print(request.url)
+    parsed_url = urlparse(request.url)
+    start_date = parse_qs(parsed_url.query)['start_date'][0]
+    end_date = parse_qs(parsed_url.query)['end_date'][0]
+    origin = parse_qs(parsed_url.query)['origin'][0]
+
+    data = sqldb.create_sql_db(start_date, origin)
+    data = sqldb.add_carbon_emissions(data)
+    sqldb.create_table(data)
+
+
+    flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
+    print(flights)
+    return render_template('flights.html', flights = flights)
 
 @app.route("/destinations", methods=["GET", "POST"])
 def destinations():
