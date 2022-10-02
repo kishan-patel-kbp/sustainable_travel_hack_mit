@@ -5,7 +5,8 @@ app = Flask(__name__)
 import sqlite3
 from collections import defaultdict
 from cs50 import SQL
-
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
 import flightapi
 import sqldb
 
@@ -29,8 +30,8 @@ if __name__ == '__main__':
 
 db = SQL("sqlite:///flights_with_emissions.db")
 
-@app.route("/search", methods=["GET", "POST"])
-def search():
+@app.route('/loading', methods=["GET", "POST"])
+def loading():
     if request.method == "POST":
         # Ensure start date was submitted
         if not request.form.get("start_date"):
@@ -56,12 +57,26 @@ def search():
         # Validate length of origin
         if len(origin) != 3:
             return "RIP"
+        
+        return render_template('loading.html', start = start_date, end = end_date, origin = origin)
 
-        data = sqldb.create_sql_db(start_date, origin)
-        data = sqldb.add_carbon_emissions(data)
-        sqldb.create_table(data)
+    else:
+        return "RIP"
 
-        flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
-        print(flights)
-        return render_template('flights.html', flights = flights)
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    
+    #print(request.url)
+    parsed_url = urlparse(request.url)
+    start_date = parse_qs(parsed_url.query)['start_date'][0]
+    end_date = parse_qs(parsed_url.query)['end_date'][0]
+    origin = parse_qs(parsed_url.query)['origin'][0]
+
+    data = sqldb.create_sql_db(start_date, origin)
+    data = sqldb.add_carbon_emissions(data)
+    sqldb.create_table(data)
+
+    flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
+    print(flights)
+    return render_template('flights.html', flights = flights)
 
