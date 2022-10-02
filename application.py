@@ -75,8 +75,9 @@ def search():
     data = sqldb.add_carbon_emissions(data)
     sqldb.create_table(data)
 
-
-    flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
+    search_query = "SELECT * FROM Flight_Data WHERE ? >= depart_date AND return_date >= ? AND origin = ? GROUP BY carbon_emissions LIMIT 10"
+    
+    flights = db.execute(search_query, start_date, end_date, origin)
     print(flights)
     return render_template('flights.html', flights = flights)
 
