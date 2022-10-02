@@ -4,7 +4,6 @@ from flask_session import Session
 app = Flask(__name__)
 import sqlite3
 from collections import defaultdict
-import mysql.connector
 from cs50 import SQL
 
 import flightapi
@@ -49,6 +48,14 @@ def search():
         start_date = request.form.get("start_date")
         end_date = request.form.get("end_date")
         origin = request.form.get("src")
+
+        # Validate start date before end date
+        if start_date > end_date:
+            return "RIP"
+
+        # Validate length of origin
+        if len(origin) != 3:
+            return "RIP"
 
         data = sqldb.create_sql_db(start_date, origin)
         data = sqldb.add_carbon_emissions(data)
