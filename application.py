@@ -66,7 +66,6 @@ def loading():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     
-    #print(request.url)
     parsed_url = urlparse(request.url)
     start_date = parse_qs(parsed_url.query)['start_date'][0]
     end_date = parse_qs(parsed_url.query)['end_date'][0]
