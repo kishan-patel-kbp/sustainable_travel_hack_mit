@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flights
+{% endblock %}
+
+{% block main %}
+    <table style="width:100%">
+        <tr>
+            <th>Symbol</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Price</th>
+            <th>Carbon Emissions</th>
+        </tr>
+        {% for flight in flights %}
+            <tr>
+                <td>{{flight["value"]}}</td>
+                <td>{{flight["origin"]}}</td>
+                <td>{{flight["destination"]}}</td>
+                <td>{{flight["airline"]}}</td>
+                <td>{{flight["carbon_emissions"]}}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+
+{% endblock %}
