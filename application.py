@@ -50,5 +50,5 @@ def search():
         sqldb.create_table(data)
 
         flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
-        # print(flights)
+        print(flights)
         return render_template('flights.html', flights = flights)
