@@ -40,6 +40,8 @@ main .webpage-heading
 {
   text-align: center;
   padding: "50px";
+  margin: "20px";
+  padding-bottom: 1.5em;
 }
 
 #start_date
@@ -59,4 +61,8 @@ main .webpage-heading
   vertical-align: bottom;
   position: relative;
   top: 5px;
+}
+
+.airport_box {
+  width: 30%;
 }

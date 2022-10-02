@@ -18,6 +18,11 @@ def index():
     name = 'Kishan Bob'
     return render_template('index.html', title='Fly Low', username=name)
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+    
+
 Session(app)
 
 if __name__ == '__main__':
