@@ -10,11 +10,11 @@ from contextlib import closing
 
 pd.options.mode.chained_assignment = None 
  
-def create_sql_db():
+def create_sql_db(period, origin_iata):
     engine = create_engine('sqlite:///test.db',
                         echo = False)
 
-    data = flightapi.create_pd_df()
+    data = flightapi.create_pd_df(period, origin_iata)
     data['carbon_emissions'] = None
     return data
 
@@ -108,6 +108,3 @@ def create_table(data):
         cur.execute("SELECT * FROM Flight_Data")
         conn.commit()
 
-data = create_sql_db()
-data = add_carbon_emissions(data)
-create_table(data)
