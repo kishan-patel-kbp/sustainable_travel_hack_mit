@@ -42,6 +42,12 @@ main .webpage-heading
   padding: "50px";
 }
 
+main .text
+{
+  text-align: center;
+  padding: "50px";
+}
+
 #start_date
 {
   display: in-line;

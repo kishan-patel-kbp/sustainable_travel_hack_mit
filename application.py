@@ -52,3 +52,8 @@ def search():
         flights = db.execute("SELECT * FROM Flight_Data LIMIT 10")
         print(flights)
         return render_template('flights.html', flights = flights)
+
+@app.route("/destinations", methods=["GET", "POST"])
+def destinations():
+    sentence = "There are a variety of sustainable travel solutions just minutes away, just fill out the form now"
+    return render_template('destinations.html', sentence = sentence)
